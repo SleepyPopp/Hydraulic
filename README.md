@@ -4,6 +4,10 @@
 [![Discord](https://img.shields.io/discord/613163671870242838.svg?color=%237289da&label=discord)](https://discord.gg/geysermc)
 [![Crowdin](https://badges.crowdin.net/geyser/localized.svg)](https://translate.geysermc.org/)
 
+> [!WARNING]
+> This repository contains code that was generated or assisted by artificial intelligence tools.
+> Users should review and validate all code before use, especially in production environments.
+
 Hydraulic is a companion to Geyser which allows for Bedrock players to join modded Minecraft: Java Edition servers. 
 
 Hydraulic is an open collaboration project by [CubeCraft Games](https://cubecraft.net).
