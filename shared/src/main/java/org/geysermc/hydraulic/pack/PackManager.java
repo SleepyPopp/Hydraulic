@@ -96,6 +96,7 @@ public class PackManager {
                 mod.id(),
                 mod.roots()
                     .stream()
+                    .filter(Files::isDirectory)
                     .map(path -> MinecraftResourcePackReader.minecraft().read(NioDirectoryFileTreeReader.read(path)))
                     .toList()
             );
@@ -183,7 +184,9 @@ public class PackManager {
 
         try {
             for (final Path root : mod.roots()) {
-                converter.input(root, false).convert();
+                if (Files.isDirectory(root)) {
+                    converter.input(root, false).convert();
+                }
             }
         } catch (IOException ex) {
             LOGGER.error("Failed to convert mod {} to pack", mod.id(), ex);
