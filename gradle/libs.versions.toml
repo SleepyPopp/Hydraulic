@@ -4,7 +4,7 @@ mixinextras = "0.3.5"
 #geyser = "2.7.0-SNAPSHOT"
 geyser = "custom-item-api-v2-SNAPSHOT"
 auto-service = "1.0.1"
-pack-converter = "3.4.1-SNAPSHOT"
+pack-converter = "18b197b4de"
 indra = "3.1.3"
 shadow = "8.3.0"
 architectury-plugin = "3.4-SNAPSHOT"
@@ -28,7 +28,7 @@ geyser-api = { group = "com.github.Novampr.Geyser", name = "api", version.ref = 
 geyser-core = { group = "com.github.Novampr.Geyser", name = "core", version.ref = "geyser" }
 geyser-fabric = { group = "com.github.Novampr.Geyser", name = "fabric", version.ref = "geyser" }
 auto-service = { group = "com.google.auto.service", name = "auto-service", version.ref = "auto-service" }
-pack-converter = { group = "org.geysermc.pack", name = "converter", version.ref = "pack-converter" }
+pack-converter = { group = "com.github.SleepyPopp.PackConverter", name = "converter", version.ref = "pack-converter" }
 indra = { group = "net.kyori", name  = "indra-common", version.ref = "indra" }
 shadow = { group = "com.gradleup.shadow", name = "com.gradleup.shadow.gradle.plugin", version.ref = "shadow" }
 architectury-plugin = { group = "architectury-plugin", name = "architectury-plugin.gradle.plugin", version.ref = "architectury-plugin" }
