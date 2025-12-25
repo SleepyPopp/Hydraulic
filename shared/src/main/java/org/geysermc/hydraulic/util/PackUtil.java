@@ -5,7 +5,7 @@ import com.google.common.hash.HashingOutputStream;
 import com.mojang.logging.LogUtils;
 import net.kyori.adventure.key.Key;
 import org.geysermc.hydraulic.Constants;
-import org.geysermc.pack.converter.type.texture.TextureMappings;
+import org.geysermc.pack.converter.util.JsonMappings;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
@@ -16,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -25,6 +24,7 @@ import java.util.stream.Stream;
  */
 public class PackUtil {
     protected static final Logger LOGGER = LogUtils.getLogger();
+    private static final JsonMappings mappings = JsonMappings.getMapping("textures");
 
     public static String getTextureName(@NotNull String modelName) {
         // TODO Sometimes things end up in the minecraft namespace when they shouldn't.
@@ -37,18 +37,17 @@ public class PackUtil {
             String value = modelValue.substring(modelValue.indexOf("/") + 1);
 
             // Need to use the Bedrock value for vanilla textures
-            Map<String, Object> textures = (Map<String, Object>) TextureMappings.textureMappings().textures(type);
-            if (textures != null) {
-                Object textureValue = textures.getOrDefault(value, "");
+            List<String> textures = mappings.map(type + "/" + value);
+            if (!textures.isEmpty() && !textures.get(0).equals(type + "/" + value)) {
+                // Mapping was found
+                String textureName = textures.get(0);
 
-                String textureName = textureValue instanceof List<?> ? ((List<String>) textureValue).getFirst() : (String) textureValue;
-
-                if (textureName.isEmpty()) {
-                    textureName = value;
-                } else {
-                    textureName = Constants.MOD_ID + ":" + textureName;
+                // Remove the type prefix if present (e.g., "block/" or "item/")
+                if (textureName.startsWith(type + "/")) {
+                    textureName = textureName.substring(type.length() + 1);
                 }
-                return textureName;
+
+                return Constants.MOD_ID + ":" + textureName;
             }
 
             return value;
