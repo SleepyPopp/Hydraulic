@@ -15,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -24,7 +23,6 @@ import java.util.stream.Stream;
  */
 public class PackUtil {
     protected static final Logger LOGGER = LogUtils.getLogger();
-    private static final JsonMappings mappings = JsonMappings.getMapping("textures");
 
     public static String getTextureName(@NotNull String modelName) {
         // TODO Sometimes things end up in the minecraft namespace when they shouldn't.
@@ -33,24 +31,21 @@ public class PackUtil {
         if (modelName.startsWith(Key.MINECRAFT_NAMESPACE)) {
             String modelValue = modelName.split(":")[1];
 
-            String type = modelValue.substring(0, modelValue.indexOf("/"));
-            String value = modelValue.substring(modelValue.indexOf("/") + 1);
-
             // Need to use the Bedrock value for vanilla textures
-            List<String> textures = mappings.map(type + "/" + value);
-            if (!textures.isEmpty() && !textures.get(0).equals(type + "/" + value)) {
-                // Mapping was found
-                String textureName = textures.get(0);
+            JsonMappings mappings = JsonMappings.getMapping("textures");
+            if (mappings != null) {
+                String output = mappings.map(modelValue).getFirst();
 
-                // Remove the type prefix if present (e.g., "block/" or "item/")
-                if (textureName.startsWith(type + "/")) {
-                    textureName = textureName.substring(type.length() + 1);
+                String value = output.substring(output.indexOf("/") + 1);
+
+                if (modelValue.equals(output)) {
+                    return value;
                 }
 
-                return Constants.MOD_ID + ":" + textureName;
+                return Constants.MOD_ID + ":" + value;
             }
 
-            return value;
+            return modelValue.substring(modelValue.indexOf("/") + 1);
         }
 
         return modelName.replace("block/", "").replace("item/", "");

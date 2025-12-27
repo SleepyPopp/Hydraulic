@@ -8,25 +8,42 @@ import org.geysermc.hydraulic.util.GeoUtil;
 import org.geysermc.pack.converter.util.JsonMappings;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
+
 @AutoService(PackModule.class)
 public class HydraulicPackModule extends PackModule<HydraulicPackModule> {
-    private static final JsonMappings mappings = JsonMappings.getMapping("textures");
-
     public HydraulicPackModule() {
         this.postProcess(context -> {
-            // Map all block textures files as valid names
-            // The JsonMappings returns keys like "block/stone" which we need to process
-            mappings.map("block").forEach(blockPath -> {
-                // blockPath will be in format like "block/stone" or just the texture name
-                String textureName = blockPath.startsWith("block/") ? blockPath.substring(6) : blockPath;
-                context.bedrockResourcePack().addBlockTexture(Constants.MOD_ID + ":" + textureName, "textures/blocks/" + textureName);
-            });
+            Map<String, List<String>> mappings;
 
-            // Map all item textures files as valid names
-            mappings.map("item").forEach(itemPath -> {
-                String textureName = itemPath.startsWith("item/") ? itemPath.substring(5) : itemPath;
-                context.bedrockResourcePack().addItemTexture(Constants.MOD_ID + ":" + textureName, "textures/items/" + textureName);
-            });
+            JsonMappings jsonMappings = JsonMappings.getMapping("textures");
+            if (jsonMappings != null) {
+                try {
+                    Field mappingsField = JsonMappings.class.getDeclaredField("mappings");
+                    mappingsField.setAccessible(true);
+
+                    mappings = (Map<String, List<String>>) mappingsField.get(jsonMappings);
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                mappings = Map.of();
+            }
+
+            // Map all block and item textures files as valid names
+            for (Map.Entry<String, List<String>> entry : mappings.entrySet()) {
+                if (entry.getKey().startsWith("block")) {
+                    for (String str : entry.getValue()) {
+                        context.bedrockResourcePack().addBlockTexture(Constants.MOD_ID + ":" + str, "textures/blocks/" + str);
+                    }
+                } else if (entry.getKey().startsWith("item")) {
+                    for (String str : entry.getValue()) {
+                        context.bedrockResourcePack().addItemTexture(Constants.MOD_ID + ":" + str, "textures/items/" + str);
+                    }
+                }
+            }
 
             // Add the empty geometry
             context.bedrockResourcePack().addBlockModel(GeoUtil.empty("geometry." + Constants.MOD_ID + ".empty"), "empty.json");
