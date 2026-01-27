@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.Block;
 import org.geysermc.geyser.api.item.custom.v2.CustomItemBedrockOptions;
 import org.geysermc.geyser.api.item.custom.v2.CustomItemDefinition;
 import org.geysermc.geyser.api.item.custom.v2.component.*;
-import org.geysermc.geyser.api.item.custom.v2.component.geyser.GeyserItemDataComponent;
+import org.geysermc.geyser.api.item.custom.v2.component.geyser.GeyserItemDataComponents;
 import org.geysermc.geyser.api.item.custom.v2.component.java.*;
 import org.geysermc.geyser.api.util.CreativeCategory;
 import org.geysermc.geyser.api.util.Holders;
@@ -162,7 +162,7 @@ public class ComponentConverter {
             if (equippable != null)
                 options.protectionValue((int) component.compute(Attributes.ARMOR, 0, equippable.slot()));
 
-            definition.component(GeyserItemDataComponent.ATTACK_DAMAGE, Math.max(0, (int) component.compute(Attributes.ATTACK_DAMAGE, 0, EquipmentSlot.MAINHAND)));
+            definition.component(GeyserItemDataComponents.ATTACK_DAMAGE, Math.max(0, (int) component.compute(Attributes.ATTACK_DAMAGE, 0, EquipmentSlot.MAINHAND)));
         });
     }
 
