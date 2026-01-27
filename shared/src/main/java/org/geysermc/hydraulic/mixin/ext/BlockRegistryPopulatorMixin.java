@@ -1,6 +1,5 @@
 package org.geysermc.hydraulic.mixin.ext;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
