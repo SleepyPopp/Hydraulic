@@ -29,7 +29,7 @@ tasks {
                 "id" to "hydraulic",
                 "name" to "Hydraulic",
                 "version" to project.version,
-                "description" to project.description,
+                "description" to project.description as String,
                 "url" to "https://geysermc.org",
                 "author" to "GeyserMC",
                 "minecraft_version" to minecraftVersion

@@ -7,7 +7,7 @@ val platforms = setOf(
     projects.neoforge,
     projects.shared,
     projects.test
-).map { it.dependencyProject }
+).map { it -> project.project(it.path) }
 
 subprojects {
     when (this) {
