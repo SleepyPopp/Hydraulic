@@ -132,7 +132,7 @@ public class PackManager {
             });
 
             for (ModInfo mod : mods) {
-                if (IGNORED_MODS.contains(mod.id())) {
+                if (shouldIgnoreMod(mod)) {
                     continue;
                 }
 
@@ -202,7 +202,7 @@ public class PackManager {
 
     private void callEvents(@NotNull Event event) {
         for (ModInfo mod : this.hydraulic.mods()) {
-            if (IGNORED_MODS.contains(mod.id())) {
+            if (shouldIgnoreMod(mod)) {
                 continue;
             }
 
@@ -311,6 +311,10 @@ public class PackManager {
             }
             return vanillaResourcePack.model(key);
         };
+    }
+
+    private static boolean shouldIgnoreMod(ModInfo mod) {
+        return IGNORED_MODS.contains(mod.id());
     }
 
     public ListMultimap<String, ModInfo> getNamespacesToMods() {
