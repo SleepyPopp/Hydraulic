@@ -3,7 +3,7 @@ mixin = "0.8.5"
 mixinextras = "0.3.5"
 geyser = "2.9.3-SNAPSHOT"
 auto-service = "1.0.1"
-pack-converter = "3.4.1-SNAPSHOT"
+pack-converter = "982190b6c7"
 indra = "4.0.0"
 shadow = "9.2.2"
 architectury-plugin = "3.4-SNAPSHOT"
@@ -24,7 +24,7 @@ geyser-api = { group = "org.geysermc.geyser", name = "api", version.ref = "geyse
 geyser-core = { group = "org.geysermc.geyser", name = "core", version.ref = "geyser" }
 geyser-fabric = { group = "org.geysermc.geyser", name = "fabric", version.ref = "geyser" }
 auto-service = { group = "com.google.auto.service", name = "auto-service", version.ref = "auto-service" }
-pack-converter = { group = "org.geysermc.pack", name = "converter", version.ref = "pack-converter" }
+pack-converter = { group = "com.github.SleepyPopp.PackConverter", name = "converter", version.ref = "pack-converter" }
 indra = { group = "net.kyori", name  = "indra-common", version.ref = "indra" }
 shadow = { group = "com.gradleup.shadow", name = "com.gradleup.shadow.gradle.plugin", version.ref = "shadow" }
 architectury-plugin = { group = "architectury-plugin", name = "architectury-plugin.gradle.plugin", version.ref = "architectury-plugin" }
