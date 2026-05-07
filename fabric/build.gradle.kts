@@ -67,6 +67,7 @@ dependencies {
     localRuntime(libs.geyser.fabric) {
         exclude(group = "io.netty")
         exclude(group = "io.netty.incubator")
+        exclude(group = "org.incendo")
     }
 }
 

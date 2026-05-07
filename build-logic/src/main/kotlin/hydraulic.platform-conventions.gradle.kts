@@ -20,10 +20,6 @@ architectury {
     minecraft = minecraftVersion
 }
 
-loom {
-    silentMojangMappingsLicense()
-}
-
 configurations {
     create("includeTransitive").isTransitive = true
 }

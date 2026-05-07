@@ -34,5 +34,17 @@ allprojects {
 
         maven("https://maven.fabricmc.net/")
         maven("https://maven.neoforged.net/releases")
+
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "Modrinth"
+                    url = uri("https://api.modrinth.com/maven")
+                }
+            }
+            filter {
+                includeGroup("maven.modrinth")
+            }
+        }
     }
 }
