@@ -42,13 +42,27 @@ dependencies {
 }
 
 tasks {
- /*   remapJar {
-        dependsOn(shadowJar)
-        inputFile.set(shadowJar.get().archiveFile)
+    named<Jar>("mergeShadowAndJarJar") {
+        from (
+            zipTree( shadowJar.map { it.outputs.files.singleFile } ).matching {
+                exclude("LICENSE")
+            },
+            zipTree( jar.map { it.outputs.files.singleFile } ).matching {
+                include("META-INF/jars/**")
+                include("META-INF/jarjar/**")
+                include("LICENSE")
+            }
+        )
         archiveBaseName.set("${modId}-neoforge")
-        archiveClassifier.set("")
-        archiveVersion.set("")
-    }*/
+    }
+
+    /*   remapJar {
+           dependsOn(shadowJar)
+           inputFile.set(shadowJar.get().archiveFile)
+           archiveBaseName.set("${modId}-neoforge")
+           archiveClassifier.set("")
+           archiveVersion.set("")
+       }*/
 
     shadowJar {
         archiveClassifier.set("dev-shadow")

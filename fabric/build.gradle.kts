@@ -16,6 +16,21 @@ configurations {
 }
 
 tasks {
+    named<Jar>("mergeShadowAndJarJar") {
+        from (
+            zipTree( shadowJar.map { it.outputs.files.singleFile } ).matching {
+                exclude("fabric.mod.json")
+                exclude("LICENSE")
+            },
+            zipTree( jar.map { it.outputs.files.singleFile } ).matching {
+                include("META-INF/jars/**")
+                include("fabric.mod.json")
+                include("LICENSE")
+            }
+        )
+        archiveBaseName.set("${modId}-fabric")
+    }
+
 /*    remapJar {
         dependsOn(shadowJar)
         inputFile.set(shadowJar.get().archiveFile)

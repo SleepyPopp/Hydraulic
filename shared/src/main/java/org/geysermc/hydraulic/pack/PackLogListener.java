@@ -18,6 +18,11 @@ public class PackLogListener implements LogListener {
     }
 
     @Override
+    public void debugUnchecked(@NotNull String message) {
+
+    }
+
+    @Override
     public void info(@NotNull String s) {
         this.logger.info(s);
     }

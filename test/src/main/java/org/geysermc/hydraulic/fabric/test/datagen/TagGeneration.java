@@ -1,7 +1,7 @@
 package org.geysermc.hydraulic.fabric.test.datagen;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BlockTags;
 import org.geysermc.hydraulic.fabric.test.ModBlocks;
@@ -9,8 +9,8 @@ import org.geysermc.hydraulic.fabric.test.ModBlocks;
 import java.util.concurrent.CompletableFuture;
 
 public class TagGeneration {
-    public static class Blocks extends FabricTagProvider.BlockTagProvider {
-        public Blocks(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    public static class Blocks extends FabricTagsProvider.BlockTagsProvider {
+        public Blocks(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
         }
 
@@ -24,8 +24,8 @@ public class TagGeneration {
         }
     }
 
-    public static class Items extends FabricTagProvider.ItemTagProvider {
-        public Items(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    public static class Items extends FabricTagsProvider.ItemTagsProvider {
+        public Items(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
             super(output, registriesFuture);
         }
 
