@@ -48,24 +48,34 @@ public abstract class MinecraftResourcePackReaderImplMixin {
      * Also catch any exceptions that may occur and log them
      */
     @Redirect(
-        method = "read(Lteam/unnamed/creative/serialize/minecraft/fs/FileTreeReader;)Lteam/unnamed/creative/ResourcePack;",
-        at = @At(
-            value = "INVOKE",
-            target = "Lteam/unnamed/creative/serialize/minecraft/io/JsonResourceDeserializer;deserializeFromJson(Lcom/google/gson/JsonElement;Lnet/kyori/adventure/key/Key;)Ljava/lang/Object;"
-        )
+            method = "read(Lteam/unnamed/creative/serialize/minecraft/fs/FileTreeReader;)Lteam/unnamed/creative/ResourcePack;",
+            at = @At(
+                    value = "INVOKE",
+                    target =
+                            "Lteam/unnamed/creative/serialize/minecraft/io/JsonResourceDeserializer;" +
+                                    "deserializeFromJson(" +
+                                    "Lcom/google/gson/JsonElement;" +
+                                    "Lnet/kyori/adventure/key/Key;" +
+                                    "Lteam/unnamed/creative/metadata/pack/PackFormat;" +
+                                    ")Ljava/lang/Object;"
+            )
     )
-    private Object deserializeFromJson(JsonResourceDeserializer instance, JsonElement jsonElement, Key key) throws IOException {
+    private Object deserializeFromJson(JsonResourceDeserializer<?> instance, JsonElement jsonElement, Key key, PackFormat packFormat) throws IOException {
+
         if (jsonElement == null) {
             return null;
         }
 
         try {
-            return instance.deserializeFromJson(jsonElement, key, PackFormat.UNKNOWN);
+            return instance.deserializeFromJson(
+                    jsonElement,
+                    key,
+                    packFormat
+            );
         } catch (Exception e) {
-            LOGGER.error("Failed to deserialize JSON (" + key + "): " + e.getMessage());
+            LOGGER.error("Failed to deserialize JSON ({}):", key, e);
+            return null;
         }
-
-        return null;
     }
 
     @Redirect(

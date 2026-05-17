@@ -8,34 +8,55 @@ import team.unnamed.creative.model.ItemTransform;
 
 import java.util.Map;
 
-@Mixin(targets = "team.unnamed.creative.serialize.minecraft.model.ModelSerializer", remap = false)
+@Mixin(
+        targets = "team.unnamed.creative.serialize.minecraft.model.ModelSerializer",
+        remap = false
+)
 public class ModelSerializerMixin {
+
     @Redirect(
-        method = "deserializeFromJson(Lcom/google/gson/JsonElement;Lnet/kyori/adventure/key/Key;)Lteam/unnamed/creative/model/Model;",
-        at = @At(
-            value = "INVOKE",
-            target = "Lteam/unnamed/creative/model/ItemTransform$Type;valueOf(Ljava/lang/String;)Lteam/unnamed/creative/model/ItemTransform$Type;"
-        )
+            method =
+                    "deserializeFromJson(" +
+                            "Lcom/google/gson/JsonElement;" +
+                            "Lnet/kyori/adventure/key/Key;" +
+                            "Lteam/unnamed/creative/metadata/pack/PackFormat;" +
+                            ")Lteam/unnamed/creative/model/Model;",
+            at = @At(
+                    value = "INVOKE",
+                    target =
+                            "Lteam/unnamed/creative/model/ItemTransform$Type;" +
+                                    "valueOf(Ljava/lang/String;)" +
+                                    "Lteam/unnamed/creative/model/ItemTransform$Type;"
+            )
     )
     private ItemTransform.Type redirectItemTransformTypeValueOf(String name) {
-        // Redirect the ItemTransform.Type.valueOf to return null instead of throwing an exception
-        // This prevents an item from failing to register when a mod is using old types
         try {
             return ItemTransform.Type.valueOf(name);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException ignored) {
             return null;
         }
     }
 
     @Redirect(
-        method = "deserializeFromJson(Lcom/google/gson/JsonElement;Lnet/kyori/adventure/key/Key;)Lteam/unnamed/creative/model/Model;",
-        at = @At(
-            value = "INVOKE",
-            target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
-        )
+            method =
+                    "deserializeFromJson(" +
+                            "Lcom/google/gson/JsonElement;" +
+                            "Lnet/kyori/adventure/key/Key;" +
+                            "Lteam/unnamed/creative/metadata/pack/PackFormat;" +
+                            ")Lteam/unnamed/creative/model/Model;",
+            at = @At(
+                    value = "INVOKE",
+                    target =
+                            "Ljava/util/Map;" +
+                                    "put(Ljava/lang/Object;Ljava/lang/Object;)" +
+                                    "Ljava/lang/Object;"
+            )
     )
-    private Object redirectDisplayMapPut(Map instance, Object k, Object v) {
-        // If the type is null, we skip adding it to the map
+    private Object redirectDisplayMapPut(
+            Map instance,
+            Object k,
+            Object v
+    ) {
         if (k == null) {
             return null;
         }
