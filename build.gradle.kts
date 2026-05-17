@@ -22,7 +22,7 @@ allprojects {
     }
 
     repositories {
-//        mavenLocal()
+        mavenLocal()
         mavenCentral()
 
         maven("https://repo.opencollab.dev/main")

@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
+import team.unnamed.creative.metadata.pack.PackFormat;
 import team.unnamed.creative.overlay.ResourceContainer;
 import team.unnamed.creative.part.ResourcePackPart;
 import team.unnamed.creative.serialize.minecraft.GsonUtil;
@@ -59,7 +60,7 @@ public abstract class MinecraftResourcePackReaderImplMixin {
         }
 
         try {
-            return instance.deserializeFromJson(jsonElement, key);
+            return instance.deserializeFromJson(jsonElement, key, PackFormat.UNKNOWN);
         } catch (Exception e) {
             LOGGER.error("Failed to deserialize JSON (" + key + "): " + e.getMessage());
         }
