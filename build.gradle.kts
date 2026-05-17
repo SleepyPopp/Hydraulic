@@ -34,6 +34,9 @@ allprojects {
 
         maven("https://maven.fabricmc.net/")
         maven("https://maven.neoforged.net/releases")
+        
+        // creative
+        maven("https://repo.nexomc.com/releases/")
 
         exclusiveContent {
             forRepository {
