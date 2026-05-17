@@ -36,6 +36,9 @@ dependencyResolutionManagement {
                 includeGroupByRegex("com\\.github\\..*")
             }
         }
+
+        // creative
+        maven("https://repo.nexomc.com/releases/")
     }
 }
 
