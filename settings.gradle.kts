@@ -2,7 +2,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 dependencyResolutionManagement {
     repositories {
-//        mavenLocal()
+        mavenLocal()
         mavenCentral()
 
         gradlePluginPortal()
@@ -67,6 +67,14 @@ pluginManagement {
         id("net.kyori.indra.git")
     }
 
+//    includeBuild("build-logic")
+//    if (extra.has("packConverterPath")) {
+//        includeBuild(extra["packConverterPath"].toString()) {
+//            dependencySubstitution {
+//                substitute(module("org.geysermc.pack:converter")).using(project(":converter"))
+//            }
+//        }
+//    }
     includeBuild("build-logic")
 }
 
