@@ -10,12 +10,12 @@ architectury-plugin = "3.5-SNAPSHOT"
 architectury-loom = "1.14-SNAPSHOT"
 asm = "5.2"
 
-# fabric
+# Fabric
 fabric-loader = "0.19.2"
-fabric-api = "0.148.0+26.1.2"
+fabric-api = "0.149.0+26.1.2"
 
-# neoforge
-neoforge-version = "26.1.2.43-beta"
+# NeoForge
+neoforge-version = "26.1.2.59-beta"
 
 [libraries]
 mixin = { group = "org.spongepowered", name = "mixin", version.ref = "mixin" }
